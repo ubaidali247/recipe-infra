@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recipe-frontend-blue
+  namespace: recipe-app
+  labels:
+    app: recipe-frontend
+    slot: blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: recipe-frontend
+      slot: blue
+  template:
+    metadata:
+      labels:
+        app: recipe-frontend
+        slot: blue
+    spec:
+      containers:
+        - name: frontend
+          image: ACRNAMEHERE.azurecr.io/recipe-frontend:latest
+          ports:
+            - containerPort: 22137

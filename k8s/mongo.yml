@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recipe-mongo
+  namespace: recipe-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recipe-mongo
+  template:
+    metadata:
+      labels:
+        app: recipe-mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:7.0
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+  namespace: recipe-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: recipe-app
+spec:
+  selector:
+    app: recipe-mongo
+  ports:
+    - port: 27017
+      targetPort: 27017
