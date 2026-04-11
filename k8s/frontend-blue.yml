@@ -21,5 +21,12 @@ spec:
       containers:
         - name: frontend
           image: recipeacr247.azurecr.io/recipe-frontend:latest
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
           ports:
             - containerPort: 22137
