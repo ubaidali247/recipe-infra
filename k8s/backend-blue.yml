@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ACRNAMEHERE.azurecr.io/recipe-backend:latest
+          image: recipeacr247.azurecr.io/recipe-backend:latest
           ports:
             - containerPort: 8080
           env:

@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ACRNAMEHERE.azurecr.io/recipe-frontend:latest
+          image: recipeacr247.azurecr.io/recipe-frontend:latest
           ports:
             - containerPort: 22137
