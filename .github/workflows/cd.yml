@@ -1,6 +1,12 @@
 name: CD - Deploy to AKS
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
   workflow_run:
     workflows: ["Frontend CI", "Backend CI"]
     types:
