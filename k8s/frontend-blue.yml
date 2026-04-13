@@ -21,6 +21,13 @@ spec:
       containers:
         - name: frontend
           image: recipeacr247.azurecr.io/recipe-frontend:latest
+          ports:
+            - containerPort: 22137
+          env:
+            - name: BACKEND_HOST
+              value: recipe-backend
+            - name: BACKEND_PORT
+              value: "8080"
           resources:
             requests:
               cpu: 50m
@@ -28,5 +35,23 @@ spec:
             limits:
               cpu: 200m
               memory: 256Mi
-          ports:
-            - containerPort: 22137
+          startupProbe:
+            httpGet:
+              path: /
+              port: 22137
+            failureThreshold: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 22137
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 22137
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 3
